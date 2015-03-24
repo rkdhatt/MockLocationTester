@@ -21,15 +21,14 @@ public class MockLocationTesterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		
 		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		Location location = lm.getLastKnownLocation(MOCK_PROVIDER);
+		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (location != null){
 			TextView tv = (TextView) findViewById(R.id.gps);
 			tv.setText("Lat: " + location.getLatitude()
 			+ "\nLong: " + location.getLongitude());
 		}
-		lm.requestLocationUpdates(MOCK_PROVIDER, 1000, 1, listener);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
 	}
 
 	private final LocationListener listener = new LocationListener() {
