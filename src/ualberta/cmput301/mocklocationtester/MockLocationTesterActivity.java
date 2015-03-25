@@ -21,17 +21,21 @@ public class MockLocationTesterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// Get the location manager.
 		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		// Ask for the last known location or ...
+		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER); // Kind of iffy (sometimes returns null)
 		if (location != null){
 			TextView tv = (TextView) findViewById(R.id.gps);
 			tv.setText("Lat: " + location.getLatitude()
 			+ "\nLong: " + location.getLongitude());
 		}
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
+		// ... request every time the location changes.
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener); // Use this in app, works more reliably.
 	}
 
 	private final LocationListener listener = new LocationListener() {
+		// Whenever location changes, android calls onLocationChanged.
 		public void onLocationChanged (Location location) {
 			TextView tv = (TextView) findViewById(R.id.gps);
 			if (location != null) {
